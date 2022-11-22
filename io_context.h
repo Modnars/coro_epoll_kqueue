@@ -12,6 +12,7 @@ public:
     IoContext();
 
     void run();
+
 private:
     constexpr static std::size_t max_events = 10;
     const int fd_;
@@ -19,10 +20,10 @@ private:
     friend Send;
     friend Recv;
     friend Accept;
-    void Attach(Socket* socket);
-    void WatchRead(Socket* socket);
-    void UnwatchRead(Socket* socket);
-    void WatchWrite(Socket* socket);
-    void UnwatchWrite(Socket* socket);
-    void Detach(Socket* socket);
+    void Attach(Socket *socket);
+    void WatchRead(Socket *socket);
+    void UnwatchRead(Socket *socket);
+    void WatchWrite(Socket *socket);
+    void UnwatchWrite(Socket *socket);
+    void Detach(Socket *socket);
 };
