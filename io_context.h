@@ -8,6 +8,11 @@ class Recv;
 class Accept;
 
 class IoContext {
+    friend class Socket;
+    friend class Send;
+    friend class Recv;
+    friend class Accept;
+
 public:
     IoContext();
 
@@ -16,10 +21,6 @@ public:
 private:
     constexpr static std::size_t max_events = 10;
     const int fd_;
-    friend Socket;
-    friend Send;
-    friend Recv;
-    friend Accept;
     void Attach(Socket *socket);
     void WatchRead(Socket *socket);
     void UnwatchRead(Socket *socket);

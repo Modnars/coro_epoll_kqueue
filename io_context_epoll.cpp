@@ -13,7 +13,7 @@ IoContext::IoContext() : fd_(epoll_create1(0)) {
 }
 
 void IoContext::run() {
-    struct epoll_event ev, events[max_events];
+    struct epoll_event events[max_events];
     for (;;) {
         int nfds = epoll_wait(fd_, events, max_events, -1);
         if (nfds == -1) {
@@ -56,22 +56,22 @@ void IoContext::Attach(Socket *socket) {
     }
 
 void IoContext::WatchRead(Socket *socket) {
-    auto new_state = socket->io_state_ | EPOLLIN;
+    int32_t new_state = socket->io_state_ | EPOLLIN;
     UpdateState(new_state);
 }
 
 void IoContext::UnwatchRead(Socket *socket) {
-    auto new_state = socket->io_state_ & ~EPOLLIN;
+    int32_t new_state = socket->io_state_ & ~EPOLLIN;
     UpdateState(new_state);
 }
 
 void IoContext::WatchWrite(Socket *socket) {
-    auto new_state = socket->io_state_ | EPOLLOUT;
+    int32_t new_state = socket->io_state_ | EPOLLOUT;
     UpdateState(new_state);
 }
 
 void IoContext::UnwatchWrite(Socket *socket) {
-    auto new_state = socket->io_state_ & ~EPOLLOUT;
+    int32_t new_state = socket->io_state_ & ~EPOLLOUT;
     UpdateState(new_state);
 }
 

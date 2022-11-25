@@ -13,6 +13,11 @@ class Socket;
 class IoContext;
 
 class Socket {
+    friend class Accept;
+    friend class Recv;
+    friend class Send;
+    friend class IoContext;
+
 public:
     Socket(std::string_view port, IoContext &io_context);
 
@@ -34,11 +39,6 @@ public:
     bool ResumeSend();
 
 private:
-    friend Accept;
-    friend Recv;
-    friend Send;
-    friend IoContext;
-
     explicit Socket(int fd, IoContext &io_context);
 
 private:
