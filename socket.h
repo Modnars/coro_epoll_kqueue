@@ -44,8 +44,8 @@ private:
 private:
     IoContext &io_context_;
     int fd_ = -1;
-    int32_t io_state_ = 0;  // 当前已经注册的可读可写等事件，epoll需要用modify所以需要将旧的事件保存起来
-    // 因为可能有两个协程同时在等待一个socket，所以要用两个coroutine_handle来保存。
+    uint32_t io_state_ = 0U;  // 当前已经注册的可读可写等事件，epoll 需要用 modify 所以需要将旧的事件保存起来
+    // 因为可能有两个协程同时在等待一个 socket，所以要用两个 coroutine_handle 来保存。
     std::coroutine_handle<> coro_recv_;  // 接收数据的协程
     std::coroutine_handle<> coro_send_;  // 发送数据的协程
 };

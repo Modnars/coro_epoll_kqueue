@@ -1,12 +1,20 @@
 cmake_minimum_required(VERSION 3.20)
 
-set(CMAKE_C_COMPILER   "/usr/bin/gcc11")
-set(CMAKE_CXX_COMPILER "/usr/bin/g++11")
 set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_FLAGS "-Werror -Wall -g -fPIC -D_GLIBCXX_USE_CXX11_ABI=0 -DASIO_STANDALONE -Wno-deprecated -Wno-class-memaccess -fdiagnostics-color=always -fno-var-tracking-assignments -Wno-misleading-indentation")
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=address -Wall -Werror")
+set (CMAKE_LINKER_FLAGS_DEBUG "${CMAKE_LINKER_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=address")
+set(CMAKE_CXX_EXTENSIONS OFF)
 
 # set the project name
 project(coro_epoll_kqueue)
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+if(CMAKE_EXPORT_COMPILE_COMMANDS)
+        # For clangd index GNU header files.
+        set(CMAKE_CXX_STANDARD_INCLUDE_DIRECTORIES ${CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES})
+endif()
 
 if(UNIX AND NOT APPLE)
     add_executable(coro_epoll echo_server.cpp io_context_epoll.cpp socket.cpp)

@@ -56,22 +56,22 @@ void IoContext::Attach(Socket *socket) {
     }
 
 void IoContext::WatchRead(Socket *socket) {
-    int32_t new_state = socket->io_state_ | EPOLLIN;
+    auto new_state = socket->io_state_ | EPOLLIN;
     UpdateState(new_state);
 }
 
 void IoContext::UnwatchRead(Socket *socket) {
-    int32_t new_state = socket->io_state_ & ~EPOLLIN;
+    auto new_state = socket->io_state_ & ~EPOLLIN;
     UpdateState(new_state);
 }
 
 void IoContext::WatchWrite(Socket *socket) {
-    int32_t new_state = socket->io_state_ | EPOLLOUT;
+    auto new_state = socket->io_state_ | EPOLLOUT;
     UpdateState(new_state);
 }
 
 void IoContext::UnwatchWrite(Socket *socket) {
-    int32_t new_state = socket->io_state_ & ~EPOLLOUT;
+    auto new_state = socket->io_state_ & ~EPOLLOUT;
     UpdateState(new_state);
 }
 
